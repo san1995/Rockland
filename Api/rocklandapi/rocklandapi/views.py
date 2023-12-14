@@ -11,6 +11,7 @@ from rest_framework import status
 @api_view(['GET', 'POST'])
 def account_list(request):
 
+    #Get all Accounts
     if request.method == 'GET':
         # get all account
         accounts = Accounts.objects.all()
@@ -19,6 +20,7 @@ def account_list(request):
         # return json
         return Response(accSerializer.data)
     
+    # Create an Account
     elif request.method == 'POST':
         # take the data send over
         # deserialize it
@@ -36,10 +38,12 @@ def account_detail(request, username):
     except Accounts.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    # Search by username
     if request.method == 'GET':
         accSerializer = AccountSerializer(account)
         return Response(accSerializer.data)
 
+    # Edit account based on username
     elif request.method == 'PUT':
         accSerializer = AccountSerializer(account, data=request.data) 
         if accSerializer.is_valid():
@@ -47,6 +51,7 @@ def account_detail(request, username):
             return Response(accSerializer.data)
         return Response(accSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # Delete account
     elif request.method == 'DELETE':
         account.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
