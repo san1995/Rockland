@@ -35,6 +35,7 @@ def account_detail(request, username):
 
     try:
         account = Accounts.objects.get(pk=username)
+    # if account does not exist
     except Accounts.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
