@@ -43,13 +43,47 @@ def signup(request):
     # If not valid 
     return Response(authUserSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Get all users and Add An User Account
+@api_view(['GET', 'POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def usersAcc_list(request):
+    
+    if request.method == 'GET':
+        # get all users
+        users = User.objects.filter(is_staff=False)
+
+        # serialize
+        authUserSerializer = AuthUserSerializer(users, many=True)
+        return Response(authUserSerializer.data)
+    
+    # Add An User Account
+    elif request.method == 'POST':
+        authUserSerializer = AuthUserSerializer(data=request.data)
+        if authUserSerializer.is_valid():
+            authUserSerializer.save()
+
+            user = User.objects.get(username=request.data['username'])
+            user.set_password(request.data['password'])
+            user.save()
+
+            return Response({"Created": True}, status=status.HTTP_201_CREATED)
+        
+        return Response(authUserSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 # Sample api that check the token from request
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
-    return Response("passed for {}.".format(request.user.email) )
+    return Response("passed for {}.".format(request.user.username) )
+
+
+
+
+
 
 # CRUD Accounts ( TO BE REMOVED )
 
@@ -73,7 +107,7 @@ def account_list(request):
         accSerializer = AccountSerializer(data = request.data)  # data=request.data - data from the json that is send over
         if accSerializer.is_valid():
             accSerializer.save()
-            return Response(accSerializer.data, status=status.HTTP_201_CREATED)
+            return Response("Created", status=status.HTTP_201_CREATED)
         
 @api_view(['GET', 'PUT', 'DELETE'])
 def account_detail(request, username):
@@ -101,3 +135,4 @@ def account_detail(request, username):
     elif request.method == 'DELETE':
         account.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    

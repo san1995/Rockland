@@ -10,4 +10,4 @@ class AccountSerializer(serializers.ModelSerializer):
 class AuthUserSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = User
-        fields = ['id','username', 'password', 'email']
+        fields = ['id','username', 'password', 'email', 'is_staff', 'is_active']
