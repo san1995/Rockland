@@ -22,3 +22,16 @@ class Accounts(models.Model):
         db_table = 'Accounts'
 
 
+class RockInformation(models.Model):
+    rock_name = models.CharField(primary_key=True, max_length=50)
+    type = models.CharField(max_length=30)
+    colour = models.CharField(max_length=20)
+    hardness = models.IntegerField()
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.rock_name + ' details'
+    
+    class Meta:
+        managed = False
+        db_table = 'rock_information'

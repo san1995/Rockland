@@ -30,10 +30,12 @@ urlpatterns = [
     path('rockinfo/', views.rockinfo),
     path('signup/', views.signup),
     path('admin/', admin.site.urls),
-    path('api/accounts/', views.account_list),
-    path('api/accounts/<str:username>', views.account_detail),
+    path('api/users/<str:username>', views.userAcc_details),
     path('api/login', views.login),
     path('api/signup', views.signup),
-    path('api/test_token', views.test_token)
+    path('api/test_token', views.test_token),
+    path('api/users/', views.usersAcc_list),
+    path('api/rocks/', views.rockInfo_list),
+    path('api/rocks/<str:rockname>', views.rockInfo_detail)
 
 ]
