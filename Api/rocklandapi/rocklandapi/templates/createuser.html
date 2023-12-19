@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+<title>Rockyland</title>
+   
+<div class="banner">
+    <h2>Welcome to Rockyland</h2>
+    <div>
+    </div>  
+  </div>
+  
+</head>
+<body>
+<nav>
+    <div class="topnav">
+        <!-- <a class="active" href="home.html">Home</a>
+        <a href="/quiz/" href = "quiz.html">Quiz</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+        
+        <a href="{% url "landingpage" %}"> Sign In </a> 
+      
+        
+          
+        
+      </div>
+</nav>      
+    
+  
+
+</head>
+
+<body>
+   
+    
+    
+    <div class="loginform">
+        <h3>Sign up for free today</h3>
+        <form action="/signup/" method="post" enctype="multipart/form-data">
+            <label for="username">username:</label>
+            <input type="text" id="username" name="username"> <h4 style="color: #FF0000;"> {{ unameerr }} </h4> <br><br>
+            <label for="password">password:</label>
+            <input type="text" id="password" name="password"> <h4 style="color: #FF0000;"> {{ pwempty }} </h4> <h4 style="color: #FF0000;"> {{ retypeerr }} </h4> <br><br>
+            <label for="repassword">re-type password:</label>
+            <input type="text" id="repassword" name="repassword"> <h4 style="color: #FF0000;"> {{ repwerr }} </h4> <br><br>
+            <label for="emailadd">email address:</label>
+            <input type="text" id="email" name="email"> <h4 style="color: #FF0000;"> {{ emailerr }} </h4> <br><br>
+            <h4 style="color: #32CD32;"> {{ accountcreationstatus }} </h4> <br><br>
+        
+            <input type="submit" value="Create new account">
+            
+            </form>
+    
+            
+    </div>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- banner + navbar for standard user -->
+<html>
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/mystyle.css' %}" >
+    <title>Rockyland</title>
+    <style>
+
+    </style>
+    <div class="banner">
+        <h2>Welcome to Rockyland</h2>
+</div>
+
+<nav>
+    <div class="topnav">
+        <!-- <a class="active" href="home.html">Home</a>
+        <a href="/quiz/" href = "quiz.html">Quiz</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+        
+
+          <a href="home.html">Home</a>
+          
+          <a href="quiz.html">Quiz</a>
+          
+          <a href="register.php">Register</a>
+          
+          <a href="aboutus.html">About Us</a>
+          
+        
+      </div>
+</nav>      
+    
+
+{% endblock content %}
+
+<br>
+
+</html>
+

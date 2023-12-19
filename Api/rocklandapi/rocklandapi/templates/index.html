@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}" >
+{% include 'banner.html' %}
+{% block content %}
+{% endblock %}
+
+</head>
+
+<br>
+<body>
+
+<div class="loginform">
+    <!-- <form action="/action_page.php"> -->
+    <form action="login/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="uname">username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="pw">password:</label>
+        <input type="text" id="password" name="password"><br><br>
+        <h4 style="color: #FF0000;"> {{ status }} </h4> <br><br> 
+        
+        <input type="submit" value="Submit">
+        </form>
+
+        
+</div>
+
+<div class = "createbtn">
+    <hr>
+<!-- <form action="createuser">
+    <input type="submit" value="Create new account" /> -->
+    <a class="createbtn" href="/createuser">Create new account</a>
+</form>
+</div>
+
+</body>
+</html>
+
+

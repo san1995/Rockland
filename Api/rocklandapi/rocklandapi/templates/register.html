@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+        }
+
+        td {
+            padding: 8px;
+        }
+
+        select, input[type="text"], input[type="password"], input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2869ec;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .additional-fields {
+            display: none;
+        }
+    </style>
+    <script>
+        function toggleAdditionalFields() {
+            var userType = document.getElementById("userType").value;
+            var additionalFields = document.getElementsByClassName("additional-fields");
+
+            for (var i = 0; i < additionalFields.length; i++) {
+            if (userType === "user") {
+                additionalFields[i].style.display = "table-row";
+            } else {
+                additionalFields[i].style.display = "none";
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <form action="register.php" method="post">
+        <table>
+            <h1 style="text-align: center; font-weight: bold;">Registration Page</h1>
+            <tr>
+                <td>User Type:</td>
+                <td>
+                    <select id="userType" name="userType" onchange="toggleAdditionalFields()">
+                        <option value="" disabled selected></option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" placeholder="Username" name="username" required /></td>
+            </tr>
+            <tr class="additional-fields">
+                <td>Date of Birth:</td>
+                <td><input type="date" name="dob" required/></td>
+            </tr>
+            <tr class="additional-fields">
+                <td>Status Message:</td>
+                <td><input type="text" name="statusMessage" required/></td>
+            </tr>
+            <tr >
+            <tr class="additional-fields">
+                <td>Profile Picture:</td>
+                <td><input type="file" placeholder="profilePicture" accept="image/*" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" placeholder="Password" name="password" required /></td>
+            </tr>
+        </table>
+        
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
+
