@@ -2,45 +2,25 @@
 <html>
 <head>
     <link rel="stylesheet" href="mystyle.css">
-<title>Rockyland</title>
+{% include 'navbar_user.html' %}
+{% block content %}
+{% endblock %}
+
 <style>
 
 </style>
-<div class="banner">
-    <h2>Welcome to Rockyland</h2>
-    <div>
-    </div>  
-  </div>
-  
+
 </head>
 <body>
-  
-    <nav>
-        <div class="topnav">
-            <!-- <a class="active" href="home.html">Home</a>
-            <a href="/quiz/" href = "quiz.html">Quiz</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a> -->
-            
-    
-              <a href="home.html">Home</a>
-              
-              <a href="quiz.html">Quiz</a>
-              
-              <a href="register.php">Register</a>
-              
-              <a href="aboutus.html">About Us</a>
-              
-            
-          </div>
-    </nav>      
-      
-   
-    <h5>Quiz baby!</h5>
-    <button>Get started</button>
+    <img src="/static/img/rockcute.png" >
+    <div class="aboutus">
+        <p>
+        <font size="10">  
+            Rockyland | Where rock learning can be fun and interactive<br>CSIT-23-S4-23<br>Team members: Oh Li Qi Shirin, Tan Lok San, Lee Kah Boon, Mandy Wee Jing Yi
 
+        </font>  
+    </p>
 
+    </div>
 </body>
 </html>
-
-
