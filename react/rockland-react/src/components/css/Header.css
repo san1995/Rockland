@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 .banner {
     /* The image used */
     background-image: url('../../assets/rockbanner.png');
@@ -13,9 +15,22 @@
     color: white;/* Add a black background color to the top navigation */
     
     text-align: center;
-    font-style: italic; 
+    font-style: Helvetica; 
     font-size: large;
+
+  
+    
 }
+
+.rcorners2 {
+  border-radius: 25px;
+  border: 2px solid #f5f7f2;
+  padding: 20px;
+  width: 200px;
+  height: 150px;
+}
+
+
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -42,3 +57,81 @@
     background-color: #9A9A9A;
     color: white;
 }
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+  }
+  
+  .dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: rgb(116, 105, 105);
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+/*align navigation btn to left */
+.topnav-right {
+    float: right;
+    
+  }
+
+.tagline{
+  font-size: 40px;
+  font-family: Poppins;
+  
+  text-transform: uppercase;
+  color: #4CAF50;
+
+  margin-left: 1%;
+  margin-top: 1%;
+ 
+  text-align: left;
+  display: inline-block;
+
+  padding:10px;
+
+}
+
+.container {
+  display: inline-block;
+  align-items: center;
+  margin-left: 0%;
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+

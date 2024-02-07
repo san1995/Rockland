@@ -16,6 +16,9 @@ from django.shortcuts import get_object_or_404
 # Login 
 @api_view(['POST'])
 def login(request):
+    print("login called")
+    print(request.data)
+    print(type(request.data))
     user = get_object_or_404(User, username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({"detail":"Not Found."}, status=status.HTTP_404_NOT_FOUND)
@@ -27,13 +30,17 @@ def login(request):
 # Sign Up
 @api_view(['POST'])
 def signup(request):
+    print("signup called")
+    print(request.data)
     authUserSerializer = AuthUserSerializer(data=request.data)
     if authUserSerializer.is_valid():
         authUserSerializer.save()
-
         # After user is saved into db, retireve user's username
         user = User.objects.get(username=request.data['username'])
         user.set_password(request.data['password'])
+        #new code here
+        # ref fields = ['id','username', 'password', 'email', 'first_name', 'last_name', 'is_staff', 'is_active']
+        #check passed data 
         user.save()
 
         # Create token for the account

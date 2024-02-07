@@ -1,0 +1,18 @@
+.topnav-right {
+  float: right;
+}
+
+.white-box {
+  position: absolute;
+  background-color: #FFFFFF;
+  color: black;
+  width: 50px;
+  height: 50px;
+  padding: 20px;
+}
+
+.heading{
+  text-align: center;
+  font-style: Helvetica; 
+  font-size: large;
+}
