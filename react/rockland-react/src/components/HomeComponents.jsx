@@ -26,7 +26,7 @@ const HomeComponents = () => {
             // "Authorization" : "Token fmkdsfnssdfjiaenqkedas"
         };
 
-        axios.post('http://13.250.109.11:8001/api/login', user)
+        axios.post('http://127.0.0.1:8000/api/login', user)
             .then(response => {
                 console.log(response);
                 console.log(response.data);
