@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 # create endpoints here
 # endpoints = certain url we can access the data from
 
-# Login 
+# Login - TOUPDATE MORE
 @api_view(['POST'])
 def login(request):
     print("login called")
@@ -27,11 +27,9 @@ def login(request):
     authUserSerializer = AuthUserSerializer(instance=user)
     return Response({"token": token.key, "user": authUserSerializer.data})
 
-# Sign Up
+# Sign Up - TOUPDATE MORE
 @api_view(['POST'])
 def signup(request):
-    print("signup called")
-    print(request.data)
     authUserSerializer = AuthUserSerializer(data=request.data)
     if authUserSerializer.is_valid():
         authUserSerializer.save()
@@ -155,6 +153,134 @@ def rockInfo_detail(request, rockname):
     elif request.method == 'DELETE':
         rock.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+# User Profile
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_Profile(request, username):
+    # Get Profile by username
+    try:
+        profile = UserProfile.objects.get(pk=username)
+    except UserProfile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    # Get details by username
+    if request.method == 'GET':
+        userProfileSerializer = UserProfileSerializer(profile)
+        return Response(userProfileSerializer.data)
+    
+
+# Education Video
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_videos(request, level):
+    # Get Videos by level
+    try:
+        videos = EducationVideo.objects.filter(level=level)
+    except EducationVideo.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        educationVideoSerializer = EducationVideoSerializer(videos, many=True)
+        return Response(educationVideoSerializer.data)
+    
+#Forum Topics
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_topics(request):
+    # Retrieve all Rock Information
+    if request.method == 'GET':
+        topics = ForumTopics.objects.all()
+        forumTopicsSerializer = ForumTopicsSerializer(topics, many=True)
+        return Response(forumTopicsSerializer.data)
+
+
+# Forum Thread
+@api_view(['POST'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def post_thread(request):
+    if request.method == 'POST':
+        forumThreadSerializer = ForumThreadSerializer(data=request.data)
+        if forumThreadSerializer.is_valid():
+            forumThreadSerializer.save()
+            return Response({"Created": True}, status=status.HTTP_201_CREATED)
+        return Response(forumThreadSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_thread(request, topic_id):
+        # Get Videos by level
+    try:
+        threads = ForumThread.objects.filter(fid=topic_id)
+    except ForumThread.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    if request.method == 'GET':
+        forumThreadSerializer = GetForumThreadSerializer(threads, many=True)
+        return Response(forumThreadSerializer.data)  
+
+#Forum Comment
+@api_view(['POST'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def post_comment(request):
+    if request.method == 'POST':
+        forumCommentSerializer = ForumCommentSerializer(data=request.data)
+        if forumCommentSerializer.is_valid():
+            forumCommentSerializer.save()
+            return Response({"Created": True}, status=status.HTTP_201_CREATED)
+        return Response(forumCommentSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_comment(request, thread_id):
+    try:
+        comments = ForumComment.objects.filter(thread_id=thread_id)
+    except ForumComment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    if request.method == 'GET':
+        forumCommentSerializer = ForumCommentSerializer(comments, many=True)
+        return Response(forumCommentSerializer.data) 
+           
+
+
+# Quiz Result
+@api_view(['POST'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def post_quizResult(request):
+    if request.method == 'POST':
+        quizResultSerializer = QuizResultSerializer(data=request.data)
+        if quizResultSerializer.is_valid():
+            quizResultSerializer.save()
+            return Response({"Created": True}, status=status.HTTP_201_CREATED)
+        return Response(quizResultSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# Update Result
+    # INPROGRESS
+    
+# Get Result
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_quizResult(request, username):
+    try:
+        result = QuizResult.objects.filter(username=username)
+    except QuizResult.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    if request.method == 'GET':
+        quizResultSerializer = QuizResultSerializer(result, many=True)
+        return Response(quizResultSerializer.data) 
+
 
     
 
