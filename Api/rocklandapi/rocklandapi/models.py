@@ -40,7 +40,7 @@ class RockInformation(models.Model):
         db_table = 'rock_information'
 
 class Badges(models.Model):
-    username = models.OneToOneField(AuthUser, models.DO_NOTHING, db_column='username', primary_key=True)  # The composite primary key (username, badge_id) found, that is not supported. The first column is selected.
+    username = models.CharField(max_length=50, primary_key=True)
     badge_id = models.CharField(max_length=50)
     badge_desc = models.CharField(max_length=150, blank=True, null=True)
     date_achieved = models.DateTimeField()
@@ -111,7 +111,7 @@ class QuizQuestion(models.Model):
 
 class QuizResult(models.Model):
     username = models.CharField(max_length=150)
-    quiz_level = models.IntegerField()
+    quiz_level = models.CharField(max_length=30)
     quiz_mark = models.IntegerField()
     datetime = models.DateTimeField()
     id = models.IntegerField(primary_key=True)

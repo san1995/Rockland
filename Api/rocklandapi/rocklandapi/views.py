@@ -9,11 +9,27 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from datetime import datetime
+import json
 
 # create endpoints here
 # endpoints = certain url we can access the data from
 
-# Login - TOUPDATE MORE
+
+# Pre-Defined dictionary
+badge_dict = {
+    "rockexplorer": "1",
+    "quiz1": "2",
+    "quiz2": "3",
+    "rockenthusiast": "4",
+    "quiz3": "5",
+    "quiz4": "6",
+    "rockexpert": "7",
+    "quiz5": "8",
+    "quiz6": "9"
+}
+
+# Login - Might add email OTP
 @api_view(['POST'])
 def login(request):
     print("login called")
@@ -27,10 +43,13 @@ def login(request):
     authUserSerializer = AuthUserSerializer(instance=user)
     return Response({"token": token.key, "user": authUserSerializer.data})
 
-# Sign Up - TOUPDATE MORE
+# Sign Up
 @api_view(['POST'])
 def signup(request):
     authUserSerializer = AuthUserSerializer(data=request.data)
+    userProfileSerializer = UserProfileSerializer(data=request.data)
+
+
     if authUserSerializer.is_valid():
         authUserSerializer.save()
         # After user is saved into db, retireve user's username
@@ -44,7 +63,11 @@ def signup(request):
         # Create token for the account
         token = Token.objects.create(user=user)
 
-        return Response({"token": token.key, "user": authUserSerializer.data})
+        if userProfileSerializer.is_valid():
+            userProfileSerializer.save()
+            return Response({"token": token.key, "user": authUserSerializer.data})
+        # If not valid 
+        return Response(authUserSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # If not valid 
     return Response(authUserSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -155,11 +178,11 @@ def rockInfo_detail(request, rockname):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-# User Profile
-@api_view(['GET'])
+# User Profile - still left edit profile using PUT
+@api_view(['GET', 'PUT'])
 #@authentication_classes([SessionAuthentication, TokenAuthentication])
 #@permission_classes([IsAuthenticated])
-def get_Profile(request, username):
+def getedit_Profile(request, username):
     # Get Profile by username
     try:
         profile = UserProfile.objects.get(pk=username)
@@ -249,10 +272,23 @@ def get_comment(request, thread_id):
     if request.method == 'GET':
         forumCommentSerializer = ForumCommentSerializer(comments, many=True)
         return Response(forumCommentSerializer.data) 
-           
+    
+# Badge
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_badge(request, username):
+    try:
+        badges = Badges.objects.filter(username=username)
+    except Badges.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        badgeSerializer = BadgesSerializer(badges, many=True)
+        return Response(badgeSerializer.data)           
 
 
-# Quiz Result
+# Quiz Result 
 @api_view(['POST'])
 #@authentication_classes([SessionAuthentication, TokenAuthentication])
 #@permission_classes([IsAuthenticated])
@@ -261,11 +297,27 @@ def post_quizResult(request):
         quizResultSerializer = QuizResultSerializer(data=request.data)
         if quizResultSerializer.is_valid():
             quizResultSerializer.save()
+
+            if (request.data['quiz_mark'] == 8):
+                # Convert required data to JSON
+                user = User.objects.get(username=request.data['username'])
+                # Get the primary key value of the user object
+                user_pk = user.username
+
+                badge_obtained = badge_dict[request.data['quiz_level']]
+                date = datetime.today().strftime('%Y-%m-%d')
+                jsondata = {'username': user_pk, 'badge_id': badge_obtained, 'date_achieved': date}
+
+                # Save into db
+                badgeSerializer = BadgesSerializer(data=jsondata)
+                if badgeSerializer.is_valid():
+                    badgeSerializer.save()
+                    return Response({"Created": True}, status=status.HTTP_201_CREATED)
+                return Response(badgeSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check 
             return Response({"Created": True}, status=status.HTTP_201_CREATED)
         return Response(quizResultSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-# Update Result
-    # INPROGRESS
     
 # Get Result
 @api_view(['GET'])

@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/users/', views.usersAcc_list),
     path('api/rocks/', views.rockInfo_list),
     path('api/rocks/<str:rockname>', views.rockInfo_detail),
-    path('api/user_profile/<str:username>', views.get_Profile),
+    path('api/user_profile/<str:username>', views.getedit_Profile),
     path('api/videos/<str:level>', views.get_videos),
     path('api/topics/', views.get_topics),
     path('api/post_thread', views.post_thread),
@@ -35,5 +35,6 @@ urlpatterns = [
     path('api/post_quizResult', views.post_quizResult),
     path('api/get_quizResult/<str:username>', views.get_quizResult),
     path('api/post_comments', views.post_comment),
-    path('api/get_comments/<int:thread_id>', views.get_comment)
+    path('api/get_comments/<int:thread_id>', views.get_comment),
+    path('api/badge/<str:username>', views.get_badge),
 ]
