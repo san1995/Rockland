@@ -299,17 +299,12 @@ def post_quizResult(request):
             quizResultSerializer.save()
 
             if (request.data['quiz_mark'] == 8):
-                # Convert required data to JSON
-                user = User.objects.get(username=request.data['username'])
-                # Get the primary key value of the user object
-                user_pk = user.username
-
                 badge_obtained = badge_dict[request.data['quiz_level']]
                 date = datetime.today().strftime('%Y-%m-%d')
-                jsondata = {'username': user_pk, 'badge_id': badge_obtained, 'date_achieved': date}
+                data = {'username': request.data['username'], 'badge_id': badge_obtained, 'date_achieved': date}
 
                 # Save into db
-                badgeSerializer = BadgesSerializer(data=jsondata)
+                badgeSerializer = BadgesSerializer(data=data)
                 if badgeSerializer.is_valid():
                     badgeSerializer.save()
                     return Response({"Created": True}, status=status.HTTP_201_CREATED)
