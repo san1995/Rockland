@@ -40,7 +40,8 @@ class RockInformation(models.Model):
         db_table = 'rock_information'
 
 class Badges(models.Model):
-    username = models.CharField(max_length=50, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=50)
     badge_id = models.CharField(max_length=50)
     badge_desc = models.CharField(max_length=150, blank=True, null=True)
     date_achieved = models.DateTimeField()
@@ -48,7 +49,6 @@ class Badges(models.Model):
     class Meta:
         managed = False
         db_table = 'badges'
-        unique_together = (('username', 'badge_id'),)
 
 
 class EducationVideo(models.Model):

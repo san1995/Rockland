@@ -63,9 +63,21 @@ def signup(request):
         # Create token for the account
         token = Token.objects.create(user=user)
 
+
+        # Create record in user profile in db
         if userProfileSerializer.is_valid():
             userProfileSerializer.save()
-            return Response({"token": token.key, "user": authUserSerializer.data})
+
+            # Create record for badge in db once use profile is created
+            badge_obtained = badge_dict['rockexplorer']
+            date = datetime.today().strftime('%Y-%m-%d')
+            data = {'username': request.data['username'], 'badge_id': badge_obtained, 'date_achieved': date}
+            badgeSerializer = BadgesSerializer(data=data)
+            if badgeSerializer.is_valid():
+                badgeSerializer.save()
+                return Response({"token": token.key, "user": authUserSerializer.data})
+            
+            return Response(badgeSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
         # If not valid 
         return Response(authUserSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -293,11 +305,17 @@ def get_badge(request, username):
 #@authentication_classes([SessionAuthentication, TokenAuthentication])
 #@permission_classes([IsAuthenticated])
 def post_quizResult(request):
+    try:
+        profile = UserProfile.objects.get(username=request.data['username'])
+    except UserProfile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
     if request.method == 'POST':
         quizResultSerializer = QuizResultSerializer(data=request.data)
         if quizResultSerializer.is_valid():
             quizResultSerializer.save()
 
+            # Full mark achieve by user
             if (request.data['quiz_mark'] == 8):
                 badge_obtained = badge_dict[request.data['quiz_level']]
                 date = datetime.today().strftime('%Y-%m-%d')
@@ -307,11 +325,24 @@ def post_quizResult(request):
                 badgeSerializer = BadgesSerializer(data=data)
                 if badgeSerializer.is_valid():
                     badgeSerializer.save()
-                    return Response({"Created": True}, status=status.HTTP_201_CREATED)
+
+                    # Update user type based on quiz level done
+                    if (request.data['quiz_level'] == "quiz2"):
+                        # Edit details of user profile
+                        userProfileSerializer = UserProfileSerializer(profile, {'username': profile.username, 'level':profile.level, 'gender': profile.gender, 'dob': profile.dob,'usertype': "4"})
+                        if userProfileSerializer.is_valid():
+                            userProfileSerializer.save()
+                            return Response({"Updated":True})
+                        return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    elif (request.data['quiz_level'] == "quiz4"):
+                        # Edit details of user profile
+                        userProfileSerializer = UserProfileSerializer(profile, {'username': profile.username, 'level':profile.level, 'gender': profile.gender, 'dob': profile.dob,'usertype': "5"})
+                        if userProfileSerializer.is_valid():
+                            userProfileSerializer.save()
+                            return Response({"Updated":True})
+                        return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
                 return Response(badgeSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            # Check 
-            return Response({"Created": True}, status=status.HTTP_201_CREATED)
         return Response(quizResultSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # Get Result
