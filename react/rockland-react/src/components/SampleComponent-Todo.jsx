@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './css/todo.css'
-import Todoitem from './todoitem';
+import Todoitem from './SampleComponent-TodoItem';
 
 let count = 0;
 

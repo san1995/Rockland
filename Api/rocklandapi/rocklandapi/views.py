@@ -258,7 +258,21 @@ def get_thread(request, topic_id):
         
     if request.method == 'GET':
         forumThreadSerializer = GetForumThreadSerializer(threads, many=True)
-        return Response(forumThreadSerializer.data)  
+        return Response(forumThreadSerializer.data)
+    
+@api_view(['GET'])
+#@authentication_classes([SessionAuthentication, TokenAuthentication])
+#@permission_classes([IsAuthenticated])
+def get_threadByThreadId(request, thread_id):
+        # Get Videos by level
+    try:
+        threads = ForumThread.objects.get(thread_id=thread_id)
+    except ForumThread.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    if request.method == 'GET':
+        forumThreadSerializer = GetForumThreadSerializer(threads)
+        return Response(forumThreadSerializer.data) 
 
 #Forum Comment
 @api_view(['POST'])
