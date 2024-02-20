@@ -11,6 +11,10 @@ import RockLearning from "./components/views/RockBeginnerHome";
 import RockBeginnerHome from "./components/views/RockBeginnerHome";
 import RockEnthusiastHome from "./components/views/RockEnthusiastHome";
 import RockExpertHome from "./components/views/RockExpertHome";
+import ForumTopicsPage from "./components/views/ForumTopicsPage";
+import ForumThreadsPage from "./components/views/ForumThreadsPage";
+import ForumNewThreadPage from "./components/views/ForumNewThreadPage";
+import ForumCommentPage from "./components/views/ForumCommentPage";
 
 const App = () => {
 
@@ -25,6 +29,11 @@ const App = () => {
         <Route path="/rockBeginner" element={<RockBeginnerHome/>} />
         <Route path="/rockEnthusiast" element={<RockEnthusiastHome/>} />
         <Route path="/rockExpert" element={<RockExpertHome/>}/>
+        <Route path="/forumTopics" element={<ForumTopicsPage/>}/>
+        <Route path="/forumThreads/:fid" element={<ForumThreadsPage/>}/>
+        <Route path="/forumNewThread/:fid" element={<ForumNewThreadPage/>}/>
+        <Route path="/forumComments/:threadid" element={<ForumCommentPage/>}/>
+        
       </Routes>
       </BrowserRouter>
     </div>
