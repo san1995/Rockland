@@ -57,13 +57,29 @@ const HomeComponents = () => {
                     
                     //update global vars
                     localStorage.setItem('username', JSON.stringify(response.data.user.username))
-                    localStorage.setItem('usertype', JSON.stringify(response.data.user.last_name))
                     localStorage.setItem('token', JSON.stringify(token))
                   
-                    //console.log("setuser return from store.jsx"+setuser)
-                    
-                    //!! lok san to do need to update based on api return usertype!!!!!
-                    // Navigate to another page if status == 200
+                    //nested axios call - if user login successfull, get usertype from user_profile table api call
+                    // Define your base URL and endpoint
+                    const baseUrl2 = 'http://127.0.0.1:8000/api/';
+                    const endpoint2 = 'user_profile';
+                    var input = `${baseUrl2}${endpoint2}/${response.data.user.username}`
+                    var urlwithoutdoublequote2 = input.replaceAll("\"", ""); //get rid of excess char
+
+                    // Make the get request to http://127.0.0.1:8000/api/user_profile to get data from user_profile table
+                    axios.get(urlwithoutdoublequote2)
+                    //axios.get(`${baseUrl}{uname}`, { headers })
+                    .then(response => {
+                        // Handle successful response
+                        console.log("call /api/user_profile data:")
+                        console.log(response.data);
+                        //update global vars
+                        localStorage.setItem('usertype', JSON.stringify(response.data.usertype))
+                    })
+                    .catch(error => {
+                        // Handle error
+                        console.error('Error:', error);
+                    });
                     navigate("/HomePage");
                 }
                 else
