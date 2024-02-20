@@ -44,7 +44,7 @@ class Badges(models.Model):
     username = models.CharField(max_length=50)
     badge_id = models.CharField(max_length=50)
     badge_desc = models.CharField(max_length=150, blank=True, null=True)
-    date_achieved = models.DateTimeField()
+    date_achieved = models.DateField()
 
     class Meta:
         managed = False
