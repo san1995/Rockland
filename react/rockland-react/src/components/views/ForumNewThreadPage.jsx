@@ -9,7 +9,7 @@ function ForumNewThreadPage(props) {
     const navigate = useNavigate();
 
     // current login user
-    const username = "userTest2";
+    const username = JSON.parse(localStorage.getItem('username'));
     // from url Parameter
     const {fid} = useParams();
 

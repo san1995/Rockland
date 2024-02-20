@@ -15,6 +15,7 @@ import ForumTopicsPage from "./components/views/ForumTopicsPage";
 import ForumThreadsPage from "./components/views/ForumThreadsPage";
 import ForumNewThreadPage from "./components/views/ForumNewThreadPage";
 import ForumCommentPage from "./components/views/ForumCommentPage";
+import RockCatalogue from "./components/views/RockCatalogue";
 
 const App = () => {
 
@@ -23,7 +24,7 @@ const App = () => {
       <BrowserRouter>
       <Routes>
         <Route index element={<LandingPage/>} />
-        <Route path="/home" element={<Home/>} />
+        <Route path="/login" element={<Home/>} />
         <Route path="/createAccount" element={<CreateUser/>} />
         <Route path="/Register" element={<Register/>} />
         <Route path="/rockBeginner" element={<RockBeginnerHome/>} />
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/forumThreads/:fid" element={<ForumThreadsPage/>}/>
         <Route path="/forumNewThread/:fid" element={<ForumNewThreadPage/>}/>
         <Route path="/forumComments/:threadid" element={<ForumCommentPage/>}/>
+        <Route path="/rockCatalogue" element={<RockCatalogue/>} />
         
       </Routes>
       </BrowserRouter>

@@ -8,6 +8,9 @@ import axios from 'axios'
 
 function ForumCommentPage(props) {
 
+    // current login user
+    const username = JSON.parse(localStorage.getItem('username'));
+
     const {threadid} = useParams();
     const [thread, setThread] = useState({thread_id: "", title: "", description: "", username:""});
     const [comments, setComments] = useState([]);
@@ -38,9 +41,6 @@ function ForumCommentPage(props) {
             })
     },[thread_user]);
 
-    // current login user
-    const username = "userTest2";
-
 
     const addComment = (event) => {
         event.preventDefault();
@@ -53,6 +53,7 @@ function ForumCommentPage(props) {
         axios.post("http://127.0.0.1:8000/api/post_comments", newComment)
             .then(res => {
                 console.log(res);
+                // To update comment displayed instantly without clicking refresh of page
                 return axios.get(`http://127.0.0.1:8000/api/get_comments/${threadid}`)
                 .then(res => {
                     console.log("Comments");
