@@ -25,7 +25,7 @@ function IndexNavbar() {
           <Navbar.Brand href="/">Interactive Rockland Learning</Navbar.Brand>
           <Nav className="me-end">
             <Nav.Link href="/createAccount">Register</Nav.Link>
-            <Nav.Link href="/home">Login</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

@@ -1,4 +1,4 @@
-import "../components/css/Error.css"
+//import "../components/css/Error.css"
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
