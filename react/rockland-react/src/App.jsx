@@ -16,6 +16,16 @@ import ForumThreadsPage from "./components/views/ForumThreadsPage";
 import ForumNewThreadPage from "./components/views/ForumNewThreadPage";
 import ForumCommentPage from "./components/views/ForumCommentPage";
 
+import ViewProfile from "./pages/ViewProfile";
+import LogoutPage from "./pages/LogoutPage";
+import QuizMain from "./pages/QuizMain";
+import Quiz1 from "./pages/Quiz1";
+import Quiz2 from "./pages/Quiz2";
+import Quiz3 from "./pages/Quiz3";
+import Quiz4 from "./pages/Quiz4";
+import Quiz5 from "./pages/Quiz5";
+import Quiz6 from "./pages/Quiz6";
+
 const App = () => {
 
   return (
@@ -33,6 +43,18 @@ const App = () => {
         <Route path="/forumThreads/:fid" element={<ForumThreadsPage/>}/>
         <Route path="/forumNewThread/:fid" element={<ForumNewThreadPage/>}/>
         <Route path="/forumComments/:threadid" element={<ForumCommentPage/>}/>
+        
+        <Route path="/logout" element={<LandingPage/>} />
+        <Route path="/viewprofile" element={<ViewProfile/>} />
+        <Route path="/quizmain" element={<QuizMain/>} />
+        <Route path="/quiz1" element={<Quiz1/>} />
+        <Route path="/quiz2" element={<Quiz2/>} />
+        <Route path="/quiz3" element={<Quiz3/>} />
+        <Route path="/quiz4" element={<Quiz4/>} />
+        <Route path="/quiz5" element={<Quiz5/>} />
+        <Route path="/quiz6" element={<Quiz6/>} />
+        <Route path="/logout" element={<LogoutPage/>} />
+     
         
       </Routes>
       </BrowserRouter>

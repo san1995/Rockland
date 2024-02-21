@@ -325,7 +325,7 @@ def post_quizResult(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'POST':
-        quizResultSerializer = QuizResultSerializer(data=request.data)
+        quizResultSerializer = QuizResultSerializer(data=request.data)   #check if quiz data is valid then save 
         if quizResultSerializer.is_valid():
             quizResultSerializer.save()
 
@@ -340,22 +340,73 @@ def post_quizResult(request):
                 if badgeSerializer.is_valid():
                     badgeSerializer.save()
 
+                    level_up = {}
+                    insert_fail = False 
                     # Update user type based on quiz level done
                     if (request.data['quiz_level'] == "quiz2"):
+                        
                         # Edit details of user profile
                         userProfileSerializer = UserProfileSerializer(profile, {'username': profile.username, 'level':profile.level, 'gender': profile.gender, 'dob': profile.dob,'usertype': "4"})
                         if userProfileSerializer.is_valid():
                             userProfileSerializer.save()
-                            return Response({"Updated":True})
-                        return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                            level_up['levelup_userprofile'] = 'success'
+                        else:
+                            level_up['levelup_userprofile'] = 'fail'
+                            level_up['profileError'] = userProfileSerializer.errors
+                            insert_Fail = True
+                        
+                        #badge_obtained = badge_dict[request.data['quiz_level']]
+                        date = datetime.today().strftime('%Y-%m-%d')
+                        data = {'username': request.data['username'], 'badge_id': badge_dict['rockenthusiast'], 'date_achieved': date} #level up to rock enthusiast at the same time
+                        
+                         # Save into db
+                        badgeSerializer = BadgesSerializer(data=data)
+                        if badgeSerializer.is_valid():
+                            badgeSerializer.save()
+                            level_up['levelup_userbadge'] = 'success'
+                        else:
+                            level_up['levelup_userbadge'] = 'fail'
+                            level_up['badgeError'] = badgeSerializer.errors
+                            insert_Fail = True
+
+                        #return Response({"Updated":True})
+                        #return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                        if insert_fail == True: #if any insert query above fail, return level_up dict and 404
+                            return Response(level_up, status=status.HTTP_400_BAD_REQUEST)
+                        else: 
+                            return Response(level_up, status = status.HTTP_201_CREATED) #if both insert query pass
+                    
                     elif (request.data['quiz_level'] == "quiz4"):
-                        # Edit details of user profile
+                       # Edit details of user profile
                         userProfileSerializer = UserProfileSerializer(profile, {'username': profile.username, 'level':profile.level, 'gender': profile.gender, 'dob': profile.dob,'usertype': "5"})
                         if userProfileSerializer.is_valid():
                             userProfileSerializer.save()
-                            return Response({"Updated":True})
-                        return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
-                return Response(badgeSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                            level_up['levelup_userprofile'] = 'success'
+                        else:
+                            level_up['levelup_userprofile'] = 'fail'
+                            level_up['profileError'] = userProfileSerializer.errors
+                            insert_Fail = True
+                        
+                        #badge_obtained = badge_dict[request.data['quiz_level']]
+                        date = datetime.today().strftime('%Y-%m-%d')
+                        data = {'username': request.data['username'], 'badge_id': badge_dict['rockexpert'], 'date_achieved': date} #level up to rock expert at the same time
+                        
+                         # Save into db
+                        badgeSerializer = BadgesSerializer(data=data)
+                        if badgeSerializer.is_valid():
+                            badgeSerializer.save()
+                            level_up['levelup_userbadge'] = 'success'
+                        else:
+                            level_up['levelup_userbadge'] = 'fail'
+                            level_up['badgeError'] = badgeSerializer.errors
+                            insert_Fail = True
+
+                        #return Response({"Updated":True})
+                        #return Response(userProfileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                        if insert_fail == True: #if any insert query above fail, return level_up dict and 404
+                            return Response(level_up, status=status.HTTP_400_BAD_REQUEST)
+                        else: 
+                            return Response(level_up, status = status.HTTP_201_CREATED) #if both insert query pass
 
         return Response(quizResultSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

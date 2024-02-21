@@ -1,15 +1,18 @@
 import "../components/css/FormInput.css"
-import { useRef, useState } from "react";
+import "../components/css/Error.css"
+import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderLandingPage from "../components/HeaderLandingPage"
 import FormInput from "../pages/FormInput"
 import axios from 'axios';
+import { UserContext } from '../components/UserContext'
 
 
 const CreateUser = () => {
   const navigate = useNavigate(); //page navigation
- 
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const[values, setValues] = useState({
 
     username:"",
@@ -50,6 +53,7 @@ const CreateUser = () => {
       errorMessage:"",
       label:"Birthday",
       required:true,
+      maxDate: getMaxDate(), // Set minimum date dynamically
     },
     {
       id:4,
@@ -84,6 +88,14 @@ const CreateUser = () => {
     
   ]
   
+  function getMaxDate() { //do not let user select future dates
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+
+    return `${yyyy}-${mm}-${dd}`;
+  }
 
 
 const handleOptionChange = (event) => {
@@ -95,6 +107,10 @@ const handleOptionChange = (event) => {
 
 /* const handleSubmit = (e) =>{ */
 const handleSubmit = async (e) => { 
+  
+  //on submit event fired, clear previous error messages
+  setSuccessMessage(''); 
+  setErrorMessage('');
 
   e.preventDefault(); //prevent page refresh when user click on submit
   
@@ -102,10 +118,10 @@ const handleSubmit = async (e) => {
   const data = new FormData(e.target)
   // Get the selected radio button value
 
-  const userselect = selectedOption; // Assign selectedOption to another variable
+  const gender = selectedOption; // Assign selectedOption to another variable
 
   // Append the selected radio button value to the form data
-  data.append('is_superuser', userselect); //add key-value pair to my existing data! business user - 2 , rock beginner - 3
+  //data.append('is_superuser', userselect); //add key-value pair to my existing data! business user - 2 , rock beginner - 3
 
   const data_unravel = Object.fromEntries(data.entries())
   console.log("on submit data check")
@@ -113,43 +129,81 @@ const handleSubmit = async (e) => {
   console.log(data_unravel.email)
   console.log(data_unravel.birthday)
   console.log(data_unravel.password)
-  console.log(data_unravel.is_superuser);
+  //console.log(data_unravel.is_superuser);
  
   // Create an array of key-value pairs with empty values
-  const user = {username: '', password: '', is_superuser:'', email:''};
+  //const user = {username: '', password: '', last_name:'', email:''};
+  const user = {username: '', password: '', email:'', dob:'', usertype:'3', gender:'', level:'beginner'}; //usertype default rock beginner
   user.username = data_unravel.username
   user.password = data_unravel.password
-  user.is_superuser = userselect
+  //user.last_name = userselect  //store usertype in last_name field. workaround for django generated user_auth tbl
   user.email = data_unravel.email
+  user.dob = data_unravel.birthday
+  user.gender = gender
   // Later, you can populate the values of the object
   //myObject.username = data_unravel.username;
   //myObject.password = data_unravel.password;
   
 
   //console.log(myObject);
-  try{
-  axios.post('http://127.0.0.1:8000/api/signup', user)
-          .then(response => {
-              console.log("axios response ")
-              console.log(response.status)
-              console.log(response);
-              console.log(response.data);
+ // try{
+axios.post('http://127.0.0.1:8000/api/signup', user)
+        .then(response => {
+            console.log("axios response")
+            console.log(response.status)
+            console.log(response);
+            console.log("=========response.data")
+            console.log(response.data);
 
-              if (response.status === 200)
-              {
-                  // Navigate to another page if status == 200
-                  //navigate("/home");
-                  console.log("pass")
-              }
-              else
-              {
-                  console.log("fail");
-              }
-          });
+            if (response.status === 200)
+            {
+                // Navigate to another page if status == 200
+                //navigate("/home");
+                console.log("pass")
+                setSuccessMessage('User account successfully created!');
+            }
+            else
+            {
+                console.log("fail");
+            }
+        })
+        .catch(error => {    // To catch HTTP error codes returned by an axios.post
+          // Handle error
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("1st")
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            
+            if (error.response.status === 404){ //views.py signup return http 404 error
+             
+              setErrorMessage('username already exists!');
+            }
+            //else do nothing
 
-    }catch(err) {
-      console.log(err.message);
-    }
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+           
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+            
+          }
+          console.log(error.config);
+        });
+
+  //}catch(err) {
+    //console.log("error caught")
+    //console.log(err.message);
+    //console.log(err.response.data);
+    //console.log(err.response.status);
+    //console.log(err.response.headers);
+    
+
+  //}
   //const newuser = {}
   //const response = axios.post('http://127.0.0.1:8000/api/signup', newuser);
   
@@ -177,7 +231,9 @@ const handleSubmit = async (e) => {
   return (
        <div>
       <HeaderLandingPage />
-      <h2>Create an Account</h2>
+      <div style={{ textAlign: 'center' }}>
+      <h2>Create an Account -  Sign up for free today!</h2>
+    </div>
       <div className="userform">
         <form onSubmit={handleSubmit}>
           {/* Render form inputs */}
@@ -191,22 +247,34 @@ const handleSubmit = async (e) => {
                 value={values[input.name]}
                 onChange={onChange}
                 required={input.required}
+                max={input.maxDate} // Set max date
               />
             </div>
           ))}
 
           {/* Render radio buttons */}
           <div className="radio-group">
-            <input type="radio" name="gender" value="3" checked={selectedOption === '3'} onChange={onRadioBtnChange} /> 
-            <label htmlFor="3">Select this option to register if you are interested in learning about rocks!</label>
+            <input type="radio" name="gender" value="Male" checked={selectedOption === 'Male'} onChange={onRadioBtnChange} /> 
+            <label htmlFor="Male">Male</label>
             
-            <input type="radio" name="gender" value="2" checked={selectedOption === '2'} onChange={onRadioBtnChange}/> 
-            <label htmlFor="3">Select this option to register if you are interested in buying/selling rock related items!</label>
+            <input type="radio" name="gender" value="Female" checked={selectedOption === 'Female'} onChange={onRadioBtnChange}/> 
+            <label htmlFor="Female">Female</label>
           </div>
+
+          
           {/*<pre>Selected Value: {gender}</pre> */}
 
           <button>Submit</button>
+
+          {/* Display success message if register user success */}
+          {successMessage && <div className="success-message">{successMessage}</div>}
+
+          {/* Display error message if it exists */}
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         </form>
+
+          
       </div>
     </div>
   )
