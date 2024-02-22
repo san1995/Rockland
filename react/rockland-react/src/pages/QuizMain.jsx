@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from "../components/Header";
+import UserNavbar from '../components/navbars/UserNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -36,7 +37,8 @@ const ButtonWithRedirect = ({ label, path, disabled, onClick }) => {
       disabled={disabled}
       style={{ 
         backgroundColor: disabled ? 'darkgrey' : 'black',
-        color: disabled ? 'grey' : 'white'
+        color: disabled ? 'grey' : 'white',
+        
       }}
       //style={{ backgroundColor: disabled ? 'grey' : 'inherit' }}
     >
@@ -103,16 +105,38 @@ const QuizMain = () => {
   return (
     <div>
       {/* Header (eg. NavBar, Banner) */}
-      <Header />
-      <h1>Quiz levels</h1>
-      {messageToUser}
+      <UserNavbar/>
+      <Container fluid style={{paddingTop:'130px'}}>
       {/* Render buttons with appropriate disabled states */}
-      <ButtonWithRedirect label="Level 1" path="/quiz1" disabled={isButtonDisabled1} />
-      <ButtonWithRedirect label="Level 2" path="/quiz2" disabled={isButtonDisabled2} />
-      <ButtonWithRedirect label="Level 3" path="/quiz3" disabled={isButtonDisabled3} />
-      <ButtonWithRedirect label="Level 4" path="/quiz4" disabled={isButtonDisabled4} />
-      <ButtonWithRedirect label="Level 5" path="/quiz5" disabled={isButtonDisabled5} />
-      <ButtonWithRedirect label="Level 6" path="/quiz6" disabled={isButtonDisabled6} />
+      <Row>
+        <Col>
+          <h1>Quiz levels</h1>
+          <p>{messageToUser}</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+        {/* Render buttons with appropriate disabled states */}
+        <ButtonWithRedirect label="Level 1" path="/quiz1" disabled={isButtonDisabled1} />
+        </Col>
+        <Col>
+          <ButtonWithRedirect label="Level 2" path="/quiz2" disabled={isButtonDisabled2} />
+        </Col>
+        <Col>
+          <ButtonWithRedirect label="Level 3" path="/quiz3" disabled={isButtonDisabled3} />
+        </Col>
+        <Col>
+          <ButtonWithRedirect label="Level 4" path="/quiz4" disabled={isButtonDisabled4} />
+        </Col>
+        <Col>
+          <ButtonWithRedirect label="Level 5" path="/quiz5" disabled={isButtonDisabled5} />
+        </Col>
+        <Col>
+          <ButtonWithRedirect label="Level 6" path="/quiz6" disabled={isButtonDisabled6} />
+        </Col>
+      </Row>
+      </Container>
+    
     </div>
   ); 
 }

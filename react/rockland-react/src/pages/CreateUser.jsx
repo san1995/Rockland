@@ -1,11 +1,12 @@
 import "../components/css/FormInput.css"
 import "../components/css/Error.css"
-import { useRef, useState, useContext } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HeaderLandingPage from "../components/HeaderLandingPage"
 import FormInput from "../pages/FormInput"
+import IndexNavbar from '../components/navbars/IndexNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import axios from 'axios';
-import { UserContext } from '../components/UserContext'
+
 
 
 const CreateUser = () => {
@@ -186,13 +187,16 @@ axios.post('http://127.0.0.1:8000/api/signup', user)
           } else if (error.request) {
             // The request was made but no response was received
             console.log(error.request);
+            setErrorMessage('username already exists!');
            
           } else {
             // Something happened in setting up the request that triggered an Error
             console.log('Error', error.message);
+            setErrorMessage('username already exists!');
             
           }
           console.log(error.config);
+          setErrorMessage('username already exists!');
         });
 
   //}catch(err) {
@@ -229,54 +233,56 @@ axios.post('http://127.0.0.1:8000/api/signup', user)
   };
 
   return (
-       <div>
-      <HeaderLandingPage />
+      <div>
+      <IndexNavbar/>
+      <Container fluid style={{paddingTop:'130px'}}>
       <div style={{ textAlign: 'center' }}>
       <h2>Create an Account -  Sign up for free today!</h2>
-    </div>
-      <div className="userform">
-        <form onSubmit={handleSubmit}>
-          {/* Render form inputs */}
-          {inputs.map((input) => (
-            <div key={input.id}>
-              <label>{input.label}</label>
-              <input
-                type={input.type}
-                name={input.name}
-                placeholder={input.placeholder}
-                value={values[input.name]}
-                onChange={onChange}
-                required={input.required}
-                max={input.maxDate} // Set max date
-              />
-            </div>
-          ))}
-
-          {/* Render radio buttons */}
-          <div className="radio-group">
-            <input type="radio" name="gender" value="Male" checked={selectedOption === 'Male'} onChange={onRadioBtnChange} /> 
-            <label htmlFor="Male">Male</label>
-            
-            <input type="radio" name="gender" value="Female" checked={selectedOption === 'Female'} onChange={onRadioBtnChange}/> 
-            <label htmlFor="Female">Female</label>
-          </div>
-
-          
-          {/*<pre>Selected Value: {gender}</pre> */}
-
-          <button>Submit</button>
-
-          {/* Display success message if register user success */}
-          {successMessage && <div className="success-message">{successMessage}</div>}
-
-          {/* Display error message if it exists */}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-
-        </form>
-
-          
       </div>
-    </div>
+        <div className="userform">
+          <form onSubmit={handleSubmit}>
+            {/* Render form inputs */}
+            {inputs.map((input) => (
+              <div key={input.id}>
+                <label>{input.label}</label>
+                <input
+                  type={input.type}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  value={values[input.name]}
+                  onChange={onChange}
+                  required={input.required}
+                  max={input.maxDate} // Set max date
+                />
+              </div>
+            ))}
+
+            {/* Render radio buttons */}
+            <div className="radio-group">
+              <input type="radio" name="gender" value="Male" checked={selectedOption === 'Male'} onChange={onRadioBtnChange} /> 
+              <label htmlFor="Male">Male</label>
+              
+              <input type="radio" name="gender" value="Female" checked={selectedOption === 'Female'} onChange={onRadioBtnChange}/> 
+              <label htmlFor="Female">Female</label>
+            </div>
+
+            
+            {/*<pre>Selected Value: {gender}</pre> */}
+
+            <button>Submit</button>
+
+            {/* Display success message if register user success */}
+            {successMessage && <div className="success-message">{successMessage}</div>}
+
+            {/* Display error message if it exists */}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+          </form>
+
+            
+        </div>
+        </Container>
+      </div>
   )
 }
 

@@ -1,0 +1,34 @@
+.user-profile {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto; /* Center the profile */
+  }
+  
+  .profile-image img {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%;
+    object-fit: cover; /* Ensure the image covers the entire container */
+    margin-right: 20px;
+  }
+  
+  .profile-details {
+    flex: 1;
+  }
+  
+  .profile-details p {
+    margin: 0 0 10px 0;
+  }
+  
+  .profile-details ul {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .profile-details li {
+    list-style-type: none;
+  }

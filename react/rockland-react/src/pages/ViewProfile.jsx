@@ -1,12 +1,11 @@
-import Header from "../components/Header"
+import UserNavbar from '../components/navbars/UserNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import {React, useEffect} from "react";
-import { UserContext, UserProvider } from '../components/UserContext';
 import { useState } from 'react';
 import axios from 'axios';
 import "../components/css/UserProfile.css"
 import avatar from "../assets/displaypic.jpg";
-import RockE from "../assets/RockExplorer.png";
-import Quiz1 from "../assets/Quiz1.png";
+
 //homepage after user login!
 
 const ViewProfile = () => {
@@ -228,41 +227,52 @@ const ViewProfile = () => {
 
   return (
     <div>
-    {/* Header (eg. NavBar, Banner) */}
-    <Header/> 
-    <div className="user-profile">
-      <div className="profile-image">
-        <img src={userData.imageUrl} alt="User Avatar" />
-      </div>
-      <div className="profile-details">
-        <p>Username: {userData.username}</p>
-        <p>User Level: {userData.userlvl}</p>
-        <p>email: {userData.email}</p>
-        <p>Gender: {userData.gender}</p>
-        <p>Date of Birth: {userData.dateOfBirth}</p>
-        
-       
-      </div>
-    </div>
-    <div className="container"> 
-    <p>Achieved Bagdes!</p>
-      {/* Loop through BadgesObject */}
-      {Object.keys(BadgesObject).map(key => {
-        const badge = BadgesObject[key];
-        // Check if achieved is true
-        if (badge.achieved === 'true') {
-          return (
-            <div key={key}>
-              <img src={badge.imgurl} alt={badge.description} />
-              <p>Achieved Date: {badge.date}</p>
-              <p>Description: {badge.description}</p>
+      {/* Header (eg. NavBar, Banner) */}
+      <UserNavbar/>
+      <Container fluid style={{ paddingTop: '130px' }}>
+        <Row>
+          <Col xs={12} md={6}>
+            <div className="user-profile">
+              <div className="profile-image">
+                <img src={userData.imageUrl} alt="User Avatar" />
+              </div>
+              <div className="profile-details">
+                <p>Username: {userData.username}</p>
+                <p>User Level: {userData.userlvl}</p>
+                <p>Email: {userData.email}</p>
+                <p>Gender: {userData.gender}</p>
+                <p>Date of Birth: {userData.dateOfBirth}</p>
+              </div>
             </div>
-          );
-        }
-        return null;
-      })}
+          </Col>
+          <Col xs={12} md={6}>
+            <div className="container">
+              <p>Achieved Badges!</p>
+              {/* Loop through BadgesObject */}
+              <Row>
+                {Object.keys(BadgesObject).map(key => {
+                  const badge = BadgesObject[key];
+                  // Check if achieved is true
+                  if (badge.achieved === 'true') {
+                    return (
+                      <Col key={key} xs={6} md={3}>
+                        {/* Adjust the xs and md values as needed */}
+                        <div>
+                          <img src={badge.imgurl} alt={badge.description} />
+                          <p>Achieved Date: {badge.date}</p>
+                          <p>Description: {badge.description}</p>
+                        </div>
+                      </Col>
+                    );
+                  }
+                  return null;
+                })}
+              </Row>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
-   </div>
   )
 }
 

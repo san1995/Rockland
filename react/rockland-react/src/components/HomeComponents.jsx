@@ -1,8 +1,9 @@
 //import "../components/css/Error.css"
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IndexNavbar from '../components/navbars/IndexNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import axios from 'axios';
-//import React from "react";
 
 
 //login
@@ -50,6 +51,8 @@ const HomeComponents = () => {
 
                 if (response.status === 200)
                 {
+                    let response_usertype = ""
+                   
                     const token = response.data.token;  //get data from key-value pair by using key=>const extractedValue = myObject.key;
                     console.log("token value: " + token)
                     //const usertype = response.data.user.last_name //use lastname field to store user type
@@ -75,12 +78,22 @@ const HomeComponents = () => {
                         console.log(response.data);
                         //update global vars
                         localStorage.setItem('usertype', JSON.stringify(response.data.usertype))
+                        if(response.data.usertype == "3"){ //direct to different pages for diff usertypes
+                            navigate("/rockBeginner");
+                        }
+                        else if(response.data.usertype == "4"){
+                            navigate("/rockEnthusiast");
+                        }
+                        else if(response.data.usertype == "5"){
+                            navigate("/rockExpert");
+                        }
+
                     })
                     .catch(error => {
                         // Handle error
                         console.error('Error:', error);
                     });
-                    navigate("/HomePage");
+                    
                 }
                 else
                 {
@@ -108,6 +121,10 @@ const HomeComponents = () => {
   return (
     <div>
         <div>
+        <IndexNavbar/>
+        <Container fluid style={{paddingTop:'130px'}}>
+            <Row className="justify-content-center">
+            <Col xs={12} md={6}> {/* Specify the column size for different screen sizes */}
             <br/><br/>
             <label htmlFor="username">Username:</label>
             <input ref={usernameRef} type="text" name="username" id="username" placeholder="Enter username"/>
@@ -115,13 +132,13 @@ const HomeComponents = () => {
             <label htmlFor="password">Password:</label>
             <input ref={passwordRef} type="password" name="password" id="password" placeholder="Enter Password"/>
 
-            &nbsp;<button onClick={() => login()}>Login</button>
+            &nbsp;<button onClick={login} style={{ marginTop: '15px' }}>Login</button>
 
             {/* Display error message if it exists */}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
-
-        
-            
+            </Col>
+            </Row>
+        </Container>    
         </div>
 
        

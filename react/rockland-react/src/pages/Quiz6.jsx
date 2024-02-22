@@ -1,8 +1,7 @@
-import Header from "../components/Header"
-import HomeComponents from "../components/HomeComponents"
-import React, { useContext } from "react";
+import UserNavbar from '../components/navbars/UserNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
+import React from "react";
 import { useRef, useState } from "react";
-import { UserContext, UserProvider } from '../components/UserContext';
 import axios from 'axios';
 
 //Quiz page 
@@ -241,45 +240,45 @@ const Quiz6 = () => {
     
     <div>
         {/* Header (eg. NavBar, Banner) */}
-        <Header/>
-        
-        {/* Body Content */}
-        {/*ternary operator loop*/}
-        {currentQuestion < questions.length ? ( 
-        <div>
-          <h2>Question {currentQuestion + 1}</h2>
-          <p>{questions[currentQuestion].question}</p>
-          <ul>
-          {questions[currentQuestion].image && <img src={questions[currentQuestion].image}/>}
-            {questions[currentQuestion].options.map((option, index) => (
-              <li key={index}>
-                <label>
-                  <input
-                    type="radio"
-                    value={option}
-                    checked={selectedOption === option}
-                    onChange={() => handleOptionSelect(option)}
-                  />
-                  {option}
-                </label>
-                
-              </li>
-            ))}
-            
-          </ul>
-          <button onClick={handleNextQuestion}>Next</button>
-        </div>
-      ) : (
-        <div>
-          <h2>Quiz Completed!</h2>
-          <p>Your score: {score} out of {questions.length}</p>
-          {/* <button onClick={displayUserAnswers}>Review score</button> */}
-          {displayBadgeIfFullMarks()}
-          {displayUserAnswers()}
-          {postResultDatabase()}
-        </div>
-      )}
-   
+        <UserNavbar/>
+        <Container fluid style={{paddingTop:'130px'}}>
+          {/* Body Content */}
+          {/*ternary operator loop*/}
+          {currentQuestion < questions.length ? ( 
+          <div>
+            <h2>Question {currentQuestion + 1}</h2>
+            <p>{questions[currentQuestion].question}</p>
+            <ul>
+            {questions[currentQuestion].image && <img src={questions[currentQuestion].image}/>}
+              {questions[currentQuestion].options.map((option, index) => (
+                <li key={index}>
+                  <label>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={selectedOption === option}
+                      onChange={() => handleOptionSelect(option)}
+                    />
+                    {option}
+                  </label>
+                  
+                </li>
+              ))}
+              
+            </ul>
+            <button onClick={handleNextQuestion}>Next</button>
+          </div>
+        ) : (
+          <div>
+            <h2>Quiz Completed!</h2>
+            <p>Your score: {score} out of {questions.length}</p>
+            {/* <button onClick={displayUserAnswers}>Review score</button> */}
+            {displayBadgeIfFullMarks()}
+            {displayUserAnswers()}
+            {postResultDatabase()}
+          </div>
+        )}
+    </Container>
         
     </div>
   )

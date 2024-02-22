@@ -1,8 +1,8 @@
-import Header from "../components/Header"
-import HomeComponents from "../components/HomeComponents"
-import React, { useContext } from "react";
+
+import React from "react";
+import UserNavbar from '../components/navbars/UserNavbar'
+import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import { useRef, useState } from "react";
-import { UserContext, UserProvider } from '../components/UserContext';
 import axios from 'axios';
 
 //Quiz page 
@@ -242,8 +242,8 @@ const Quiz4 = () => {
     
     <div>
         {/* Header (eg. NavBar, Banner) */}
-        <Header/>
-        
+        <UserNavbar/>
+        <Container fluid style={{paddingTop:'130px'}}>
         {/* Body Content */}
         {/*ternary operator loop*/}
         {currentQuestion < questions.length ? ( 
@@ -281,7 +281,7 @@ const Quiz4 = () => {
         </div>
       )}
    
-        
+   </Container>
     </div>
   )
 }

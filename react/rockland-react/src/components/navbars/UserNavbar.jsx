@@ -40,9 +40,9 @@ function UserNavbar() {
           <Navbar.Brand href={userHome}>Rockland Learning</Navbar.Brand>
           <Nav className="me-end">
             <Nav.Link href="/RockCatalogue">Rock Catalogue</Nav.Link>
-            <Nav.Link href="">Quiz</Nav.Link>
+            <Nav.Link href="/quizmain">Quiz</Nav.Link>
             <Nav.Link href="/forumTopics">Forum</Nav.Link>
-            <Nav.Link href="">Profile</Nav.Link>
+            <Nav.Link href="/viewprofile">Profile</Nav.Link>
             <Nav.Link href="/">Logout</Nav.Link>
           </Nav>
         </Container>
