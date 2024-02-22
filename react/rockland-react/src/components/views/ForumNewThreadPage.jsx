@@ -28,7 +28,7 @@ function ForumNewThreadPage(props) {
 
         console.log(thread);
 
-        axios.post('http://127.0.0.1:8000/api/post_thread', thread)
+        axios.post('https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/post_thread', thread)
             .then(res => {
                 console.log(res);
                 console.log(res.data);

@@ -20,6 +20,7 @@ import React from "react";
 
 // reactstrap components
 import { Container } from "react-bootstrap";
+import bgimg from "../../assets/rockbanner1.png";
 
 // core components
 
@@ -28,7 +29,7 @@ function LandingPageHeader() {
   return (
     <div style={{height: "100vh",
     backgroundImage:
-    "url(" + "src/assets/rockbanner1.png" + ")", backgroundSize:"cover"}} className="d-flex align-items-center">
+    "url(" + bgimg + ")", backgroundSize:"cover"}} className="d-flex align-items-center">
         <Container fluid>
             <div className="text-center" style={{color:"white"}}>
                 <h1>Kickstart Your Rock Learning Journey</h1>

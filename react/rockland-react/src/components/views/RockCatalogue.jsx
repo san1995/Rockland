@@ -15,7 +15,7 @@ function RockCatalogue() {
     console.log(tokenStr);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/rocks/", {headers:{"Authorization": `Token ${tokenStr}`}})
+        axios.get("https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/rocks/", {headers:{"Authorization": `Token ${tokenStr}`}})
         .then(response => {
             console.log(response);
             setRocks(response.data);
@@ -28,14 +28,14 @@ function RockCatalogue() {
         const rockName = searchRef.current.value;
 
         if (rockName == ""){
-            axios.get("http://127.0.0.1:8000/api/rocks/", {headers:{"Authorization": `Token ${tokenStr}`}})
+            axios.get("https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/rocks/", {headers:{"Authorization": `Token ${tokenStr}`}})
                 .then(response => {
                     console.log(response);
                     setRocks(response.data);
             });
         }
         else {
-            axios.get(`http://127.0.0.1:8000/api/rocks/${rockName}`, {headers:{"Authorization": `Token ${tokenStr}`}})
+            axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/rocks/${rockName}`, {headers:{"Authorization": `Token ${tokenStr}`}})
             .then(response => {
                 console.log(response);
                 setRocks([]);

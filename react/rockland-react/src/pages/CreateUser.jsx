@@ -6,6 +6,7 @@ import FormInput from "../pages/FormInput"
 import IndexNavbar from '../components/navbars/IndexNavbar'
 import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import axios from 'axios';
+import bgimg from "../assets/rockbanner1.png";
 
 
 
@@ -59,8 +60,8 @@ const CreateUser = () => {
     {
       id:4,
       name:"password",
-      type:"text", 
-      //type:"password",
+      //type:"text", 
+      type:"password",
       placeholder:"Password",
       errorMessage:"Password should be 18-20 characters and include at least 1 letter, 1 number and 1 special char",
       label:"Password",
@@ -70,8 +71,8 @@ const CreateUser = () => {
     {
       id:5,
       name:"confirmPassword",
-      type:"text",
-      //type:"password",
+      //type:"text",
+      type:"password",
       placeholder:"Confirm Password",
       errorMessage:"Passwords don't match",
       label:"Confirm Password",
@@ -148,7 +149,7 @@ const handleSubmit = async (e) => {
 
   //console.log(myObject);
  // try{
-axios.post('http://127.0.0.1:8000/api/signup', user)
+axios.post('https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/signup', user)
         .then(response => {
             console.log("axios response")
             console.log(response.status)
@@ -209,7 +210,7 @@ axios.post('http://127.0.0.1:8000/api/signup', user)
 
   //}
   //const newuser = {}
-  //const response = axios.post('http://127.0.0.1:8000/api/signup', newuser);
+  //const response = axios.post('https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/signup', newuser);
   
     
 }
@@ -233,9 +234,11 @@ axios.post('http://127.0.0.1:8000/api/signup', user)
   };
 
   return (
-      <div>
+      <div style={{height: "100vh",
+      backgroundImage:`url(${bgimg})`, backgroundSize:"cover"}}>
       <IndexNavbar/>
-      <Container fluid style={{paddingTop:'130px'}}>
+      <div style={{paddingTop:'130px'}}></div>
+      <Container fluid style={{paddingTop:'5%', backgroundColor:'white', width:'60%', height:'80%', border: '2px solid #fff', borderRadius: '10px'}}>
       <div style={{ textAlign: 'center' }}>
       <h2>Create an Account -  Sign up for free today!</h2>
       </div>
@@ -243,31 +246,39 @@ axios.post('http://127.0.0.1:8000/api/signup', user)
           <form onSubmit={handleSubmit}>
             {/* Render form inputs */}
             {inputs.map((input) => (
-              <div key={input.id}>
-                <label>{input.label}</label>
-                <input
-                  type={input.type}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  value={values[input.name]}
-                  onChange={onChange}
-                  required={input.required}
-                  max={input.maxDate} // Set max date
-                />
+              <div key={input.id} className="form-group row">
+                <label className="col-sm-4 col-form-label">{input.label}</label>
+                <div className="col-sm-8">
+                  <input
+                    className="form-control"
+                    type={input.type}
+                    name={input.name}
+                    placeholder={input.placeholder}
+                    value={values[input.name]}
+                    onChange={onChange}
+                    required={input.required}
+                    max={input.maxDate} // Set max date
+                  />
+                </div>
               </div>
             ))}
 
             {/* Render radio buttons */}
-            <div className="radio-group">
-              <input type="radio" name="gender" value="Male" checked={selectedOption === 'Male'} onChange={onRadioBtnChange} /> 
-              <label htmlFor="Male">Male</label>
-              
-              <input type="radio" name="gender" value="Female" checked={selectedOption === 'Female'} onChange={onRadioBtnChange}/> 
-              <label htmlFor="Female">Female</label>
+            <label>Gender</label>
+            <div className="radio-group form-check">
+              <input type="radio" className="form-check-input" name="gender" value="Male" checked={selectedOption === 'Male'} onChange={onRadioBtnChange} /> 
+              <label htmlFor="Male" className="form-check-label">Male</label>
+            </div>
+            
+            <div className="radio-group form-check">
+              <input type="radio" className="form-check-input" name="gender" value="Female" checked={selectedOption === 'Female'} onChange={onRadioBtnChange}/> 
+              <label htmlFor="Female" className="form-check-label">Female</label>
             </div>
 
             
             {/*<pre>Selected Value: {gender}</pre> */}
+
+            <br></br>
 
             <button>Submit</button>
 

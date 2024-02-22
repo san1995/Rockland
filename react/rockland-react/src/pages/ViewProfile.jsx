@@ -91,12 +91,12 @@ const ViewProfile = () => {
         'Authorization': result //token_padding
       }
       //console.log("auth: " + result)
-      //var get_req_url = "http://127.0.0.1:8000/api/users/" + uname
-      //let url = new URL("http://127.0.0.1:8000/api/users/userTest2");
+      //var get_req_url = "https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/users/" + uname
+      //let url = new URL("https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/users/userTest2");
       //let params = new URLSearchParams(url.search);
       
       // Define your base URL and endpoint
-      const baseUrl = 'http://127.0.0.1:8000/api/';
+      const baseUrl = 'https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/';
       const endpoint = 'users';
 
       // Define the string value you want to append to the URL
@@ -110,7 +110,7 @@ const ViewProfile = () => {
       var input = `${baseUrl}${endpoint}/${uname}`
       var urlwithoutdoublequote = input.replaceAll("\"", ""); 
 
-      // Make the get request to http://127.0.0.1:8000/api/users/userTest2 to get data from auth_user table
+      // Make the get request to https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/users/userTest2 to get data from auth_user table
       axios.get(urlwithoutdoublequote, { headers }) //added await to ensure each request executed in sequential 
       //axios.get(urlwithoutdoublequote)
       .then(response => {
@@ -132,12 +132,12 @@ const ViewProfile = () => {
 
 
       // Define your base URL and endpoint
-      const baseUrl2 = 'http://127.0.0.1:8000/api/';
+      const baseUrl2 = 'https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/';
       const endpoint2 = 'user_profile';
       var input = `${baseUrl2}${endpoint2}/${uname}`
       var urlwithoutdoublequote2 = input.replaceAll("\"", ""); //get rid of excess char
 
-      // Make the get request to http://127.0.0.1:8000/api/user_profile to get data from user_profile table
+      // Make the get request to https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/user_profile to get data from user_profile table
       axios.get(urlwithoutdoublequote2)
       //axios.get(`${baseUrl}{uname}`, { headers })
       .then(response => {
@@ -163,12 +163,12 @@ const ViewProfile = () => {
       });
 
       // Define your base URL and endpoint
-      const baseUrl3 = 'http://127.0.0.1:8000/api/'; //api/badge/<str:username>
+      const baseUrl3 = 'https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/'; //api/badge/<str:username>
       const endpoint3 = 'badge';
       var input = `${baseUrl3}${endpoint3}/${uname}`
       var urlwithoutdoublequote3 = input.replaceAll("\"", ""); //get rid of excess char
 
-      // Make the get request to http://127.0.0.1:8000/api/badge/<str:username> to get data from user_profile table
+      // Make the get request to https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/badge/<str:username> to get data from user_profile table
       axios.get(urlwithoutdoublequote3)
       //axios.get(`${baseUrl}{uname}`, { headers })
       .then(response => {

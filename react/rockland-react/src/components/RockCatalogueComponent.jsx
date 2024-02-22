@@ -1,9 +1,10 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
+
 function RockCatalogueComponent(props) {
 
-    const imgsrc = "../../src/assets/rockimg/" + props.name + ".jpg"
+    const imgsrc = "/rockimg/" + props.name + ".jpg"
 
   return (
     <div style={{paddingTop:'10px'}}>

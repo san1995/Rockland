@@ -9,7 +9,7 @@ function FourmCommentsComponent(props) {
     const user_level = {"1" : "admin", "2": "business", "3": "Rock Beginner", "4":"Rock Enthusiast", "5":"Rock Expert"};
 
     // Get user level
-    axios.get(`http://127.0.0.1:8000/api/user_profile/${props.comment_user}`)
+    axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/user_profile/${props.comment_user}`)
                 .then(response => {
                     console.log(response);
                     setCommentUserLevel(response.data["usertype"]);

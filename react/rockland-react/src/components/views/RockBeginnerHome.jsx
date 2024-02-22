@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import UserNavbar from '../navbars/UserNavbar'
 import { Container, Row, Col} from 'react-bootstrap'
 import YouTube from 'react-youtube'
 
-function RockBeginnerHome() {      
+function RockBeginnerHome() {  
 
   return (
     <div>

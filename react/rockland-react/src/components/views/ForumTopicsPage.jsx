@@ -12,7 +12,7 @@ function ForumTopicsPage() {
 
     useEffect(() => {
         // Get Topics from Api
-        axios.get(`http://127.0.0.1:8000/api/topics/`)
+        axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/topics/`)
             .then(res => {
                 console.log(res);
 

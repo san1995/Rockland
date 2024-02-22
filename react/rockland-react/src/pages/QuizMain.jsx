@@ -56,12 +56,12 @@ const QuizMain = () => {
   console.log("QuizMain get uname and utype")
   console.log(uname + "   " + utype)
 
-  const baseUrl2 = 'http://127.0.0.1:8000/api/';
+  const baseUrl2 = 'https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/';
   const endpoint2 = 'user_profile';
   var input = `${baseUrl2}${endpoint2}/${uname_WithoutQuotes}`
   var urlwithoutdoublequote2 = input.replaceAll("\"", ""); //get rid of excess char
 
-  // Make the get request to http://127.0.0.1:8000/api/user_profile to get data from user_profile table
+  // Make the get request to https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/user_profile to get data from user_profile table
   axios.get(urlwithoutdoublequote2)
   //axios.get(`${baseUrl}{uname}`, { headers })
   .then(response => {

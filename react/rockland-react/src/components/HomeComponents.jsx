@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import IndexNavbar from '../components/navbars/IndexNavbar'
 import { Container, Row, Col, Form, Button} from 'react-bootstrap'
 import axios from 'axios';
+import bgimg from "../assets/rockbanner1.png";
 
 
 //login
@@ -39,7 +40,7 @@ const HomeComponents = () => {
         };
         
         
-        axios.post('http://127.0.0.1:8000/api/login', user)
+        axios.post('https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/login', user)
             .then(response => {
                 console.log(response.status);
                 console.log("================check data return!")
@@ -64,12 +65,12 @@ const HomeComponents = () => {
                   
                     //nested axios call - if user login successfull, get usertype from user_profile table api call
                     // Define your base URL and endpoint
-                    const baseUrl2 = 'http://127.0.0.1:8000/api/';
+                    const baseUrl2 = 'https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/';
                     const endpoint2 = 'user_profile';
                     var input = `${baseUrl2}${endpoint2}/${response.data.user.username}`
                     var urlwithoutdoublequote2 = input.replaceAll("\"", ""); //get rid of excess char
 
-                    // Make the get request to http://127.0.0.1:8000/api/user_profile to get data from user_profile table
+                    // Make the get request to https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/user_profile to get data from user_profile table
                     axios.get(urlwithoutdoublequote2)
                     //axios.get(`${baseUrl}{uname}`, { headers })
                     .then(response => {
@@ -120,19 +121,23 @@ const HomeComponents = () => {
 
   return (
     <div>
-        <div>
+        <div  style={{height: "100vh",
+                backgroundImage:
+                `url(${bgimg})`, backgroundSize:"cover"}} className="d-flex align-items-center">
         <IndexNavbar/>
-        <Container fluid style={{paddingTop:'130px'}}>
+        <Container fluid style={{backgroundColor:'white', width:'50%', height:'50%', border: '2px solid #fff', borderRadius: '10px'}}>
             <Row className="justify-content-center">
             <Col xs={12} md={6}> {/* Specify the column size for different screen sizes */}
-            <br/><br/>
-            <label htmlFor="username">Username:</label>
-            <input ref={usernameRef} type="text" name="username" id="username" placeholder="Enter username"/>
-            <br/><br/>
-            <label htmlFor="password">Password:</label>
-            <input ref={passwordRef} type="password" name="password" id="password" placeholder="Enter Password"/>
+            <div style={{paddingTop:'15%'}}>
+                <label htmlFor="username">Username </label>
+                <input ref={usernameRef} type="text" className="form-control" name="username" id="username" placeholder="Enter username"/>
+                <br/><br/>
+                <label htmlFor="password">Password </label>
+                <input ref={passwordRef} type="password" className="form-control" name="password" id="password" placeholder="Enter Password"/>
+                
 
-            &nbsp;<button onClick={login} style={{ marginTop: '15px' }}>Login</button>
+                &nbsp;<button onClick={login} style={{ marginTop: '15px' }}>Login</button>
+            </div>
 
             {/* Display error message if it exists */}
             {errorMessage && <div className="error-message">{errorMessage}</div>}

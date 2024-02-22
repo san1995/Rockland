@@ -151,7 +151,7 @@ const Quiz2 = () => {
     
     console.log(user_data)
   
-    axios.post('http://127.0.0.1:8000/api/post_quizResult', user_data)
+    axios.post('https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/post_quizResult', user_data)
     .then(response => {
         console.log(response.status);
         console.log("================check data return!")

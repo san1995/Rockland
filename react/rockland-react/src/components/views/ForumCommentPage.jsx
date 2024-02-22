@@ -21,19 +21,19 @@ function ForumCommentPage(props) {
     const user_level = {"1" : "admin", "2": "business", "3": "Rock Beginner", "4":"Rock Enthusiast", "5":"Rock Expert"};
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/get_threadByTId/${threadid}`)
+        axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/get_threadByTId/${threadid}`)
             .then(response => {
                 console.log(response);
                 setThread(response.data)
                 setThread_User(response.data['username']);
-                return axios.get(`http://127.0.0.1:8000/api/user_profile/${thread_user}`)
+                return axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/user_profile/${thread_user}`)
                 .then(response => {
                     console.log(response);
                     setThreadUserRole(response.data["usertype"]);
                 })
             });
 
-        axios.get(`http://127.0.0.1:8000/api/get_comments/${threadid}`)
+        axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/get_comments/${threadid}`)
             .then(res => {
                 console.log("Comments");
                 console.log(res);
@@ -50,11 +50,11 @@ function ForumCommentPage(props) {
         // Reset value
         commentRef.current.value = "";
 
-        axios.post("http://127.0.0.1:8000/api/post_comments", newComment)
+        axios.post("https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/post_comments", newComment)
             .then(res => {
                 console.log(res);
                 // To update comment displayed instantly without clicking refresh of page
-                return axios.get(`http://127.0.0.1:8000/api/get_comments/${threadid}`)
+                return axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/get_comments/${threadid}`)
                 .then(res => {
                     console.log("Comments");
                     console.log(res);

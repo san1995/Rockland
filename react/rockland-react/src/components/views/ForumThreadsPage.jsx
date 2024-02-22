@@ -12,7 +12,7 @@ function ForumThreadsPage(props) {
     const [threads, setThreads] = useState([]);
     
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/get_thread/${fid}`)
+        axios.get(`https://bxevftmdmd.execute-api.ap-southeast-1.amazonaws.com/api/get_thread/${fid}`)
             .then(response => {
                 console.log(response);
                 setThreads(response.data);

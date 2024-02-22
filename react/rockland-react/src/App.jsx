@@ -29,22 +29,22 @@ import HomeComponents from "./components/HomeComponents";
 
 const App = () => {
  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  useEffect(() => {
-    // Your logic here will run every time App.jsx is rendered
-    console.log('App component rendered');
-    //very time App.jsx is rendered
-    //if( localStorage.setItem('username', JSON.stringify(response.data.user.username)))
-    if (localStorage.getItem('username') === null) {
-        console.log("uname:" + localStorage.getItem('username'))
-        setIsLoggedIn(false)
-    }else{
-      console.log("uname:" + localStorage.getItem('username'))
-      setIsLoggedIn(true)
-    }
-    console.log("islogin" + isLoggedIn)
-  }, []);
+  // useEffect(() => {
+  //   // Your logic here will run every time App.jsx is rendered
+  //   console.log('App component rendered');
+  //   //very time App.jsx is rendered
+  //   //if( localStorage.setItem('username', JSON.stringify(response.data.user.username)))
+  //   if (localStorage.getItem('username') === null) {
+  //       console.log("uname:" + localStorage.getItem('username'))
+  //       setIsLoggedIn(false)
+  //   }else{
+  //     console.log("uname:" + localStorage.getItem('username'))
+  //     setIsLoggedIn(true)
+  //   }
+  //   console.log("islogin" + isLoggedIn)
+  // }, [isLoggedIn]);
 
 
 
